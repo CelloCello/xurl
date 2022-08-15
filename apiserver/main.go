@@ -2,7 +2,7 @@ package main
 
 import (
 	"net/http"
-	"short_url/pkg/database"
+	"short_url/apiserver/pkg/database"
 
 	"github.com/gin-gonic/gin"
 )

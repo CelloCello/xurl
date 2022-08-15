@@ -1,3 +1,3 @@
 #!/bin/bash
 
-go run ./src/main.go
+cd apiserver && go run main.go

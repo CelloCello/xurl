@@ -1,4 +1,4 @@
-module short_url
+module short_url/apiserver
 
 go 1.18
 

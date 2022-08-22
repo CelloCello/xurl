@@ -11,5 +11,6 @@ func Init() *gin.Engine {
 	r.GET("/ping", api.TestPing)
 	r.GET("api/links", api.GetLinks)
 	r.POST("api/links", api.CreateLink)
+	r.DELETE("api/links/:id", api.DeleteLink)
 	return r
 }

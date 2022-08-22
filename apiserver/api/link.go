@@ -37,7 +37,8 @@ func CreateLink(c *gin.Context) {
 	fmt.Printf("create code: %s, id: %s", link.Code, link.ID.String())
 
 	c.JSON(http.StatusOK, gin.H{
-		"msg": "success",
+		"msg":     "success",
+		"payload": link,
 	})
 }
 
@@ -57,5 +58,33 @@ func GetLinks(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"msg":     "success",
 		"payload": links,
+	})
+}
+
+func DeleteLink(c *gin.Context) {
+	db := database.GetDB()
+	id := c.Param("id")
+
+	link := database.Link{}
+	if err := db.Where("id = ?", id).First(&link).Error; err != nil {
+		c.JSON(http.StatusForbidden, gin.H{
+			"msg":   "link not found",
+			"error": err.Error(),
+		})
+		return
+	}
+
+	r := db.Delete(&link)
+	if r.Error != nil {
+		c.JSON(http.StatusForbidden, gin.H{
+			"msg":   "failed to delete",
+			"error": r.Error.Error(),
+		})
+		return
+
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"msg": "success",
 	})
 }

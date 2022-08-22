@@ -9,6 +9,7 @@ import (
 func Init() *gin.Engine {
 	r := gin.Default()
 	r.GET("/ping", api.TestPing)
-	r.POST("api/links", api.LinkCreate)
+	r.GET("api/links", api.GetLinks)
+	r.POST("api/links", api.CreateLink)
 	return r
 }

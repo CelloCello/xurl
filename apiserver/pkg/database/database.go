@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	SqlSession *gorm.DB
+	DB *gorm.DB
 )
 
 func Initialize(dbFile string) *gorm.DB {
@@ -14,5 +14,11 @@ func Initialize(dbFile string) *gorm.DB {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	return db
+	db.AutoMigrate(&Link{})
+	DB = db
+	return DB
+}
+
+func GetDB() *gorm.DB {
+	return DB
 }

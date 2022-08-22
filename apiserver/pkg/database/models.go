@@ -9,7 +9,7 @@ import (
 
 type Link struct {
 	ID        uuid.UUID `gorm:"primaryKey;type:uuid" json:"id"`
-	Url       string    `gorm:"size:256;not null;unique" json:"url"`
+	Url       string    `gorm:"size:256;not null;" json:"url" binding:"required"`
 	Code      string    `gorm:"size:50;not null;" json:"code"`
 	CreatedAt time.Time `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime:milli" json:"updated_at"`

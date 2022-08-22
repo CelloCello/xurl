@@ -7,7 +7,7 @@ import (
 )
 
 func TestPing(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "pong",
-	})
+	resp := Response{}
+	resp.Message = "pong"
+	c.JSON(http.StatusOK, resp)
 }

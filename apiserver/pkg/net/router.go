@@ -1,4 +1,4 @@
-package router
+package net
 
 import (
 	"short_url/apiserver/api"
@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Init() *gin.Engine {
+func RouteInit() *gin.Engine {
 	r := gin.Default()
 	r.GET("/ping", api.TestPing)
 	r.GET("api/links", api.GetLinks)

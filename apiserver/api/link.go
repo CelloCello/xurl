@@ -13,12 +13,12 @@ import (
 func CreateLink(c *gin.Context) {
 	db := database.GetDB()
 	link := database.Link{}
+	resp := CreateLinkResponse{}
 
 	if err := c.ShouldBindJSON(&link); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"msg":   "no binding data",
-			"error": err.Error(),
-		})
+		resp.Message = "no binding data"
+		resp.Error = err.Error()
+		c.JSON(http.StatusBadRequest, resp)
 		return
 	}
 
@@ -27,19 +27,17 @@ func CreateLink(c *gin.Context) {
 
 	r := db.Create(&link)
 	if r.Error != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"msg": "failed to create link",
-		})
+		resp.Message = "failed to create link"
+		c.JSON(http.StatusBadRequest, resp)
 		return
 	}
 
 	fmt.Printf("get link: %s\n", link.Url)
 	fmt.Printf("create code: %s, id: %s", link.Code, link.ID.String())
 
-	c.JSON(http.StatusOK, gin.H{
-		"msg":     "success",
-		"payload": link,
-	})
+	resp.Message = "success"
+	resp.Payload = link
+	c.JSON(http.StatusOK, resp)
 }
 
 func GetLinks(c *gin.Context) {
@@ -55,10 +53,10 @@ func GetLinks(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"msg":     "success",
-		"payload": links,
-	})
+	resp := LinksResponse{}
+	resp.Message = "success"
+	resp.Payload = links
+	c.JSON(http.StatusOK, resp)
 }
 
 func DeleteLink(c *gin.Context) {
@@ -66,25 +64,23 @@ func DeleteLink(c *gin.Context) {
 	id := c.Param("id")
 
 	link := database.Link{}
+	resp := Response{}
 	if err := db.Where("id = ?", id).First(&link).Error; err != nil {
-		c.JSON(http.StatusForbidden, gin.H{
-			"msg":   "link not found",
-			"error": err.Error(),
-		})
+		resp.Message = "link not found"
+		resp.Error = err.Error()
+		c.JSON(http.StatusForbidden, resp)
 		return
 	}
 
 	r := db.Delete(&link)
 	if r.Error != nil {
-		c.JSON(http.StatusForbidden, gin.H{
-			"msg":   "failed to delete",
-			"error": r.Error.Error(),
-		})
+		resp.Message = "failed to delete"
+		resp.Error = r.Error.Error()
+		c.JSON(http.StatusForbidden, resp)
 		return
 
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"msg": "success",
-	})
+	resp.Message = "success"
+	c.JSON(http.StatusOK, resp)
 }

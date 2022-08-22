@@ -1,6 +1,8 @@
 package database
 
 import (
+	"os"
+
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -21,4 +23,21 @@ func Initialize(dbFile string) *gorm.DB {
 
 func GetDB() *gorm.DB {
 	return DB
+}
+
+func TestDBInit() *gorm.DB {
+	db := Initialize("test.db")
+	// sqlDB, err := db.DB()
+	// if err != nil {
+	// 	panic("failed to get test db")
+	// }
+	// sqlDB.SetMaxIdleConns(3)
+	// sqlDB.LogMode(true)
+	return db
+}
+
+func TestDBFree(db *gorm.DB) error {
+	// db.Close()
+	err := os.Remove("test.db")
+	return err
 }

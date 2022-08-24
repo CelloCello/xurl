@@ -7,9 +7,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RouteInit() *gin.Engine {
+func RouteInit(root string) *gin.Engine {
 	r := gin.Default()
-	r.LoadHTMLGlob("views/templates/*")
+	r.LoadHTMLGlob(root + "views/templates/*")
 
 	// views
 	r.GET("/hello", views.HelloView)

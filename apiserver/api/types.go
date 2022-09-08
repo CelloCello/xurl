@@ -1,7 +1,7 @@
 package api
 
 import (
-	"short_url/apiserver/pkg/database"
+	"xurl/apiserver/pkg/database"
 )
 
 type Response struct {

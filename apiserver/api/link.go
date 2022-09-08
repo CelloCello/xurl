@@ -3,8 +3,8 @@ package api
 import (
 	"fmt"
 	"net/http"
-	"short_url/apiserver/pkg/database"
-	"short_url/apiserver/pkg/shortener"
+	"xurl/apiserver/pkg/database"
+	"xurl/apiserver/pkg/shortener"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"

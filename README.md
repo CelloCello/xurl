@@ -1,6 +1,6 @@
-# short_url
+# xURL
 
-A Golang practice of a short url service.
+An easy URL shortener service.
 
 ## Frontend
 - react 18.2

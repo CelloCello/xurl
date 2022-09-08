@@ -1,8 +1,8 @@
 package net
 
 import (
-	"short_url/apiserver/api"
-	"short_url/apiserver/views"
+	"xurl/apiserver/api"
+	"xurl/apiserver/views"
 
 	"github.com/gin-gonic/gin"
 )

@@ -2,7 +2,7 @@ package views
 
 import (
 	"net/http"
-	"short_url/apiserver/pkg/database"
+	"xurl/apiserver/pkg/database"
 
 	"github.com/gin-gonic/gin"
 )

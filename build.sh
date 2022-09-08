@@ -1,3 +1,3 @@
 #!/bin/bash
 
-go build -o ./build/short_url ./apiserver/main.go
+go build -o ./build/xurl ./apiserver/main.go

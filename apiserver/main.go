@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"short_url/apiserver/pkg/database"
-	"short_url/apiserver/pkg/net"
+	"xurl/apiserver/pkg/database"
+	"xurl/apiserver/pkg/net"
 )
 
 func main() {

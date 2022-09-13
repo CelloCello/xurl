@@ -25,8 +25,8 @@ func performRequest(r http.Handler, method, path string, data any) *httptest.Res
 }
 
 func TestPing(t *testing.T) {
-	r := net.RouteInit("../")
-	w := performRequest(r, "GET", "/api/ping", nil)
+	g := net.Init("../")
+	w := performRequest(g, "GET", "/api/ping", nil)
 
 	assert.Equal(t, http.StatusOK, w.Code)
 
@@ -40,7 +40,7 @@ func TestPing(t *testing.T) {
 func TestGetLinks(t *testing.T) {
 	db := database.TestDBInit()
 	defer database.TestDBFree(db)
-	r := net.RouteInit("../")
+	g := net.Init("../")
 
 	// mock data in db
 	link1 := database.Link{}
@@ -55,7 +55,7 @@ func TestGetLinks(t *testing.T) {
 	link2.Code = shortener.GenerateCode(link2.ID)
 	db.Create(&link2)
 
-	w := performRequest(r, "GET", "/api/links", nil)
+	w := performRequest(g, "GET", "/api/links", nil)
 
 	// var response map[string]string
 	// err := json.Unmarshal([]byte(w.Body.String()), &response)
@@ -73,10 +73,10 @@ func TestGetLinks(t *testing.T) {
 func TestCreateLink(t *testing.T) {
 	db := database.TestDBInit()
 	defer database.TestDBFree(db)
-	r := net.RouteInit("../")
+	g := net.Init("../")
 
 	newLink := database.Link{Url: "https://www.google.com"}
-	w := performRequest(r, "POST", "/api/links", newLink)
+	w := performRequest(g, "POST", "/api/links", newLink)
 
 	response := api.CreateLinkResponse{}
 	err := json.NewDecoder(w.Body).Decode(&response)
@@ -90,7 +90,7 @@ func TestCreateLink(t *testing.T) {
 func TestDeleteLink(t *testing.T) {
 	db := database.TestDBInit()
 	defer database.TestDBFree(db)
-	r := net.RouteInit("../")
+	g := net.Init("../")
 
 	// mock data in db
 	link1 := database.Link{}
@@ -105,7 +105,7 @@ func TestDeleteLink(t *testing.T) {
 	link2.Code = shortener.GenerateCode(link2.ID)
 	db.Create(&link2)
 
-	w := performRequest(r, "DELETE", "/api/links/"+link1.ID.String(), nil)
+	w := performRequest(g, "DELETE", "/api/links/"+link1.ID.String(), nil)
 
 	response := api.Response{}
 	err := json.NewDecoder(w.Body).Decode(&response)

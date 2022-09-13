@@ -7,19 +7,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RouteInit(root string) *gin.Engine {
-	r := gin.Default()
-	r.LoadHTMLGlob(root + "views/templates/*")
+func RouteInit(g *gin.Engine, root string) *gin.Engine {
+
+	g.LoadHTMLGlob(root + "views/templates/*")
 
 	// views
-	r.GET("/hello", views.HelloView)
-	r.GET("/:code", views.RedirectView)
+	g.GET("/hello", views.HelloView)
+	g.GET("/:code", views.RedirectView)
 
 	// APIs
-	r.GET("api/ping", api.TestPing)
-	r.GET("api/links", api.GetLinks)
-	r.POST("api/links", api.CreateLink)
-	r.DELETE("api/links/:id", api.DeleteLink)
+	g.GET("api/ping", api.TestPing)
+	g.GET("api/links", api.GetLinks)
+	g.POST("api/links", api.CreateLink)
+	g.DELETE("api/links/:id", api.DeleteLink)
 
-	return r
+	return g
 }

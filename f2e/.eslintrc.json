@@ -1,0 +1,41 @@
+{
+  "env": {
+    "browser": true,
+    "webextensions": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    // "plugin:@typescript-eslint/eslint-recommended",
+    // "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks"],
+  // "plugins": ["@typescript-eslint"],
+  "ignorePatterns": ["*.js", "*.cjs"],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "prettier/prettier": "error",
+    "no-unused-vars": ["error", { "args": "none" }]
+  },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  }
+}

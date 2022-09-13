@@ -1,6 +1,6 @@
 import { Net } from '../utils/net';
 
-export interface LinksPayload {
+export interface LinkPayload {
   id: string;
   url: string;
   code: string;
@@ -10,7 +10,7 @@ export interface LinksPayload {
 
 export const getLinks = async () => {
   try {
-    const resp = await Net.get<LinksPayload>('links');
+    const resp = await Net.get<LinkPayload[]>('links');
     return resp.data.payload;
   } catch (error) {
     console.error(`error: ${error}`);

@@ -1,19 +1,16 @@
-import { useEffect, useState } from 'react'
-import { Shortener, UrlTable } from '../components'
-
+import { useEffect } from 'react';
+import { Shortener, UrlTable } from '../components';
 
 const ManagePage = () => {
-
-  useEffect(() => {
-  }, [])
+  useEffect(() => {}, []);
 
   return (
     <div>
-        <h1>It's manage page!</h1>
-        <Shortener />
-        <UrlTable />
+      <h1>It is manage page!</h1>
+      <Shortener />
+      <UrlTable />
     </div>
-  )
-}
+  );
+};
 
-export default ManagePage
+export default ManagePage;

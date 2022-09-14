@@ -1,10 +1,14 @@
-import { LinkPayload } from '../api/links';
+import { LinkPayload, deleteLink } from '../api/links';
 
 interface Props {
   links: LinkPayload[];
 }
 
 const UrlTable = ({ links }: Props) => {
+  const onDelete = (link: LinkPayload) => {
+    deleteLink(link.id).then((isSuccess) => {});
+  };
+
   return (
     <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -57,6 +61,9 @@ const UrlTable = ({ links }: Props) => {
                 <a
                   href="#"
                   className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  onClick={() => {
+                    onDelete(link);
+                  }}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

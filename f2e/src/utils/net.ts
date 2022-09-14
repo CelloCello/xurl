@@ -6,6 +6,13 @@ export interface ResponseData<T = any> {
   error: string;
 }
 
+export interface Request {
+  method: ReqMethod;
+  url: string;
+  params?: any;
+  data?: any;
+}
+
 export interface Response<T = any> {
   data: ResponseData<T>;
   status: number;
@@ -14,22 +21,17 @@ export interface Response<T = any> {
 
 export type ReqMethod = Method;
 
-const request = async <Payload>(
-  method: ReqMethod,
-  url: string,
-  params?: any,
-  data?: any,
-): Promise<Response<Payload>> => {
+const request = async <Payload>(req: Request): Promise<Response<Payload>> => {
   const baseURL = 'http://localhost:8080/api';
   try {
     const resp = await axios.request<ResponseData<Payload>>({
-      url: url,
-      method: method,
+      url: req.url,
+      method: req.method,
       baseURL: baseURL,
       // headers?: AxiosRequestHeaders,
-      // headers: { "Access-Control-Allow-Origin": "*" },
-      params: params,
-      data: data,
+      // headers: { 'Access-Control-Allow-Origin': '*' },
+      params: req.params,
+      data: req.data,
       timeout: 60 * 1000,
     });
     return {
@@ -45,18 +47,18 @@ const request = async <Payload>(
 export const Net = {
   request,
   get: <T = any>(url: string, params?: any) => {
-    return request<T>('get', url, params);
+    return request<T>({ method: 'get', url, params });
   },
 
-  post: <T = any>(url: string, params?: any, data?: any) => {
-    return request<T>('post', url, params, data);
+  post: <T = any>(url: string, data?: any, params?: any) => {
+    return request<T>({ method: 'post', url, params, data });
   },
 
-  put: <T = any>(url: string, params?: any, data?: any) => {
-    return request<T>('put', url, params, data);
+  put: <T = any>(url: string, data?: any, params?: any) => {
+    return request<T>({ method: 'put', url, params, data });
   },
 
-  delete: <T = any>(url: string, params?: any, data?: any) => {
-    return request<T>('delete', url, params, data);
+  delete: <T = any>(url: string, data?: any, params?: any) => {
+    return request<T>({ method: 'delete', url, params, data });
   },
 };

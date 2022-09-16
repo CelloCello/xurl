@@ -12,6 +12,11 @@ An easy URL shortener service.
 - tailwind 3.1.8
 - vite
 
+### Start
+
+    $ npm run dev
+
+Start in `http://localhost:5173/`
 
 ## Backend
 

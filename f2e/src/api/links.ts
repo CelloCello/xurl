@@ -1,14 +1,7 @@
 import { Net } from '../utils/net';
+import { LinkPayload } from '../types';
 
-export interface LinkPayload {
-  id: string;
-  url: string;
-  code: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export const getLinks = async () => {
+export const fetchLinks = async () => {
   try {
     const resp = await Net.get<LinkPayload[]>('links');
     return resp.data.payload;

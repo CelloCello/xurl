@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react';
-import { createLink, getLinks } from '../api';
+import { useEffect, useState, KeyboardEvent } from 'react';
+import { createLink, fetchLinks } from '../api';
+
+import { useStore } from '../store';
 
 const Shortener = () => {
   const [orgUrl, setOrgUrl] = useState('');
+  const [setLinks] = useStore((state) => [state.setLinks]);
 
   useEffect(() => {}, []);
 
@@ -13,9 +16,15 @@ const Shortener = () => {
   const onGenerate = () => {
     if (!orgUrl) return;
     createLink(orgUrl).then((link) => {
-      console.log('nnnnnnnnnnn', link);
-      getLinks();
+      fetchLinks().then((payload) => {
+        setLinks(payload);
+      });
     });
+  };
+
+  const onInputKeyPress = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') onGenerate();
+    e.preventDefault();
   };
 
   return (
@@ -28,6 +37,7 @@ const Shortener = () => {
             placeholder="https://"
             value={orgUrl}
             onChange={(e) => setOrgUrl(e.target.value)}
+            onKeyPress={onInputKeyPress}
           />
           <button
             type="button"

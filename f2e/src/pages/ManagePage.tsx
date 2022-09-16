@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Shortener, UrlTable } from '../components';
-import { getLinks, LinkPayload } from '../api/links';
+import { fetchLinks } from '../api/links';
+import { useStore } from '../store';
 
 const ManagePage = () => {
-  const [links, setLinks] = useState<LinkPayload[]>([]);
+  const [links, setLinks] = useStore((state) => [state.links, state.setLinks]);
 
   useEffect(() => {
-    getLinks().then((payload) => {
+    fetchLinks().then((payload) => {
       setLinks(payload);
     });
-  }, []);
+  }, [setLinks]);
 
   return (
     <div>
-      <h1>It is manage page!</h1>
       <Shortener />
       <UrlTable links={links} />
     </div>

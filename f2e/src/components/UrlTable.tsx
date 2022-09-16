@@ -1,26 +1,39 @@
-import { LinkPayload, deleteLink } from '../api/links';
+import { deleteLink, fetchLinks } from '../api/links';
+import { LinkPayload } from '../types';
+import { useStore } from '../store';
+import { ROOT_URL } from '../constants';
 
 interface Props {
   links: LinkPayload[];
 }
 
 const UrlTable = ({ links }: Props) => {
+  const [setLinks] = useStore((state) => [state.setLinks]);
+
+  const onCopy = (code: string) => {
+    navigator.clipboard.writeText(`${ROOT_URL}/${code}`);
+  };
+
   const onDelete = (link: LinkPayload) => {
-    deleteLink(link.id).then((isSuccess) => {});
+    deleteLink(link.id).then((isSuccess) => {
+      fetchLinks().then((payload) => {
+        setLinks(payload);
+      });
+    });
   };
 
   return (
     <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <table className="w-full table-fixed text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" className="py-3 px-6">
-              Original
+            <th scope="col" className="w-1/6 py-3 px-6">
+              Code
             </th>
-            <th scope="col" className="py-3 px-6">
-              Result
+            <th scope="col" className="w-4/6 py-3 px-6">
+              Link
             </th>
-            <th scope="col" className="py-3 px-6">
+            <th scope="col" className="w-1/6 py-3 px-6">
               <span className="sr-only">Edit</span>
             </th>
           </tr>
@@ -31,17 +44,27 @@ const UrlTable = ({ links }: Props) => {
               key={link.code}
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             >
-              <th
+              <td className="py-2 px-4">
+                <a href={`${ROOT_URL}/${link.code}`} target="_blank" rel="noreferrer">
+                  {link.code}
+                </a>
+              </td>
+              <td
                 scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                className="py-2 px-4 break-all font-medium text-gray-900 dark:text-white"
               >
-                {link.url}
-              </th>
-              <td className="py-4 px-6">{link.code}</td>
-              <td className="py-4 px-6 text-right">
+                <a href={link.url} target="_blank" rel="noreferrer">
+                  {link.url}
+                </a>
+              </td>
+              <td className="flex py-2 px-4 items-center content-center justify-center">
+                {/* copy button */}
                 <a
                   href="#"
                   className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  onClick={() => {
+                    onCopy(link.code);
+                  }}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -58,9 +81,11 @@ const UrlTable = ({ links }: Props) => {
                     />
                   </svg>
                 </a>
+
+                {/* delete button */}
                 <a
                   href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  className="font-medium text-red-600 dark:text-red-500 hover:text-red-700"
                   onClick={() => {
                     onDelete(link);
                   }}

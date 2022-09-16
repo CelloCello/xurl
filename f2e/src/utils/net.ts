@@ -1,4 +1,5 @@
 import axios, { Method } from 'axios';
+import { ROOT_URL } from '../constants';
 
 export interface ResponseData<T = any> {
   msg: string;
@@ -22,7 +23,7 @@ export interface Response<T = any> {
 export type ReqMethod = Method;
 
 const request = async <Payload>(req: Request): Promise<Response<Payload>> => {
-  const baseURL = 'http://localhost:8080/api';
+  const baseURL = `${ROOT_URL}/api`;
   try {
     const resp = await axios.request<ResponseData<Payload>>({
       url: req.url,

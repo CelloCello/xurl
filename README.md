@@ -1,13 +1,16 @@
 # xURL
 
+![logo](f2e/src/assets/logo.png)
+
 An easy URL shortener service.
 
 ## Frontend
 - react 18.2
+- zustand
 - node.js 14.20.0
 - typescript 4.6.4
 - tailwind 3.1.8
-- vite 3.0.7
+- vite
 
 
 ## Backend

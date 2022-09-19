@@ -12,7 +12,7 @@ An easy URL shortener service.
 - tailwind 3.1.8
 - vite
 
-### Start
+### Start for Development
 
     $ npm run dev
 
@@ -26,14 +26,21 @@ Start in `http://localhost:5173/`
 
 All action should under `apiserver` folder.
 
-### Start
+### Start for Development
 
     $ go run main.go
 
 It will start a web service in 8080 port.
-You can test it from `http://localhost:8080/ping`. If you get `pong`, service would work fine.
+You can test it from `http://localhost:8080/api/ping`. If you get `pong`, service would work fine.
 
 ### Test
 
     $ go test -v ./tests
 
+
+## Launch Services
+
+Build images first, then you can launch them.
+
+    $ docker-compose build
+    $ docker-compose up

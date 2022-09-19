@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  xurl-apiserver:
+    container_name: xurl-apiserver
+    image: xurl/apiserver:latest
+    build:
+      context: .
+      dockerfile: ./docker/apiserver/Dockerfile
+    volumes:
+      - ./data:/app/data
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+    # env_file:
+    #   - ./.env
+    command: /entrypoint.sh
+
+  xurl-f2e:
+    container_name: xurl-f2e
+    image: xurl/f2e:latest
+    build:
+      context: .
+      dockerfile: ./docker/f2e/Dockerfile
+    expose:
+      - "5173"
+    ports:
+      - "5173:5173"
+    # env_file:
+    #   - ./.env
+
+# networks:
+#   traefik_entry:
+#     external: true

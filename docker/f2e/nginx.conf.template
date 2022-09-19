@@ -1,0 +1,15 @@
+# This template file will be copied into docker image and automatically transform to
+# nginx config which will apply environment variable.
+# For more detail see nginx image doc: https://hub.docker.com/_/nginx
+
+server {
+    listen       5173;
+    server_name  localhost;
+    index index.html;
+    root   /usr/share/nginx/html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+        add_header Cache-Control 'no-cache';
+    }
+}

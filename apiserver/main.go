@@ -8,7 +8,7 @@ import (
 
 func main() {
 	// database
-	database.Initialize("data.db")
+	database.Initialize("data/data.db")
 
 	// network
 	g := net.Init("./")

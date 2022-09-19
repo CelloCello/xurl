@@ -1,7 +1,9 @@
 package database
 
 import (
+	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
@@ -12,6 +14,11 @@ var (
 )
 
 func Initialize(dbFile string) *gorm.DB {
+	err := os.MkdirAll(filepath.Dir(dbFile), os.ModePerm)
+	if err != nil {
+		log.Println(err)
+	}
+
 	db, err := gorm.Open(sqlite.Open(dbFile), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")

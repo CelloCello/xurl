@@ -18,6 +18,7 @@ COPY ./f2e/package*.json .
 RUN npm ci
 
 COPY ./f2e/ .
+COPY ./docker/f2e/.env .env
 RUN npm run build
 
 ################################

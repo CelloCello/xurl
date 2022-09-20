@@ -5,9 +5,12 @@ import { useStore } from '../store';
 
 const Shortener = () => {
   const [orgUrl, setOrgUrl] = useState('');
+  const [clearBtnVisible, setClearBtnVisible] = useState(false);
   const [setLinks] = useStore((state) => [state.setLinks]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setClearBtnVisible(orgUrl ? true : false);
+  }, [orgUrl]);
 
   const onClear = () => {
     setOrgUrl('');
@@ -18,13 +21,16 @@ const Shortener = () => {
     createLink(orgUrl).then((link) => {
       fetchLinks().then((payload) => {
         setLinks(payload);
+        setOrgUrl('');
       });
     });
   };
 
   const onInputKeyPress = (e: KeyboardEvent) => {
-    if (e.key === 'Enter') onGenerate();
-    e.preventDefault();
+    if (e.key === 'Enter') {
+      onGenerate();
+      e.preventDefault();
+    }
   };
 
   return (
@@ -39,22 +45,25 @@ const Shortener = () => {
             onChange={(e) => setOrgUrl(e.target.value)}
             onKeyPress={onInputKeyPress}
           />
-          <button
-            type="button"
-            className="flex absolute inset-y-0 right-0 items-center pr-3 border-0 focus:outline-0"
-            onClick={onClear}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+
+          {clearBtnVisible ? (
+            <button
+              type="button"
+              className="flex absolute inset-y-0 right-0 items-center pr-3 border-0 focus:outline-0"
+              onClick={onClear}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          ) : null}
         </div>
         <button
           // type="submit"

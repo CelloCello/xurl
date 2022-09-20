@@ -44,7 +44,7 @@ func GetLinks(c *gin.Context) {
 	db := database.GetDB()
 	links := []database.Link{}
 
-	result := db.Find(&links)
+	result := db.Order("created_at desc").Find(&links)
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"msg":   "failed to get links",

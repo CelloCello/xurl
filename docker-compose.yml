@@ -1,21 +1,38 @@
 version: '3'
 
 services:
+  xurl-traefik:
+    container_name: xurl-traefik
+    # The official v2 Traefik docker image
+    image: traefik:v2.8
+    # Enables the web UI and tells Traefik to listen to docker
+    command: --api.insecure=true --providers.docker
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+
   xurl-apiserver:
     container_name: xurl-apiserver
     image: xurl/apiserver:latest
     build:
       context: .
       dockerfile: ./docker/apiserver/Dockerfile
+    depends_on:
+      - xurl-traefik
     volumes:
       - ./data:/app/data
     expose:
       - "8080"
-    ports:
-      - "8080:8080"
-    # env_file:
-    #   - ./.env
     command: /entrypoint.sh
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.xurl-apiserver.loadbalancer.server.port=8080"
+      - "traefik.http.routers.xurl-apiserver.rule=Host(`xurl.localhost`) && (PathPrefix(`/api`) || PathPrefix(`/{id:[A-Za-z0-9]{8}}`))"
 
   xurl-f2e:
     container_name: xurl-f2e
@@ -23,13 +40,11 @@ services:
     build:
       context: .
       dockerfile: ./docker/f2e/Dockerfile
+    depends_on:
+      - xurl-traefik
     expose:
       - "5173"
-    ports:
-      - "5173:5173"
-    # env_file:
-    #   - ./.env
-
-# networks:
-#   traefik_entry:
-#     external: true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.xurl-f2e.loadbalancer.server.port=5173"
+      - "traefik.http.routers.xurl-f2e.rule=Host(`xurl.localhost`)"

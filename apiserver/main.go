@@ -16,7 +16,7 @@ func main() {
 	// start
 	err := g.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 	if err != nil {
-		panic(fmt.Sprintf("Failed to start the service - Error: %v", err))
+		panic(fmt.Sprintf("Failed to start the service - Error: %v\n", err))
 	}
 
 	// srv := &http.Server{

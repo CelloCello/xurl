@@ -1,7 +1,7 @@
 package api
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"xurl/apiserver/pkg/database"
 	"xurl/apiserver/pkg/shortener"
@@ -32,8 +32,8 @@ func CreateLink(c *gin.Context) {
 		return
 	}
 
-	fmt.Printf("get link: %s\n", link.Url)
-	fmt.Printf("create code: %s, id: %s", link.Code, link.ID.String())
+	log.Printf("get link: %s\n", link.Url)
+	log.Printf("create code: %s, id: %s", link.Code, link.ID.String())
 
 	resp.Message = "success"
 	resp.Payload = link

@@ -1,7 +1,7 @@
 package views
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"xurl/apiserver/pkg/database"
 
@@ -20,7 +20,7 @@ func RedirectView(c *gin.Context) {
 		})
 		return
 	}
-	fmt.Println(link)
-	fmt.Printf("redirect to: %s\n", link.Url)
+	log.Println(link)
+	log.Printf("redirect to: %s\n", link.Url)
 	c.Redirect(http.StatusMovedPermanently, link.Url)
 }

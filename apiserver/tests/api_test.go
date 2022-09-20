@@ -44,13 +44,13 @@ func TestGetLinks(t *testing.T) {
 
 	// mock data in db
 	link1 := database.Link{}
-	link1.Url = "https://www.google.com"
+	link1.Url = "https://www.yahoo.com"
 	link1.ID = uuid.New()
 	link1.Code = shortener.GenerateCode(link1.ID)
 	db.Create(&link1)
 
 	link2 := database.Link{}
-	link2.Url = "https://www.yahoo.com"
+	link2.Url = "https://www.google.com"
 	link2.ID = uuid.New()
 	link2.Code = shortener.GenerateCode(link2.ID)
 	db.Create(&link2)

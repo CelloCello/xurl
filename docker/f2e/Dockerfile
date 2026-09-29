@@ -8,7 +8,7 @@
 ################################
 # STAGE 0: build production code
 ################################
-FROM node:14.20.0-alpine3.16 AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 

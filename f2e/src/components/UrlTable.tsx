@@ -8,14 +8,14 @@ interface Props {
 }
 
 const UrlTable = ({ links }: Props) => {
-  const [setLinks] = useStore((state) => [state.setLinks]);
+  const setLinks = useStore((state) => state.setLinks);
 
   const onCopy = (code: string) => {
     navigator.clipboard.writeText(`${ROOT_URL}/${code}`);
   };
 
   const onDelete = (link: LinkPayload) => {
-    deleteLink(link.id).then((isSuccess) => {
+    deleteLink(link.id).then(() => {
       fetchLinks().then((payload) => {
         setLinks(payload);
       });

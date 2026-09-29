@@ -4,7 +4,8 @@ import { fetchLinks } from '../api/links';
 import { useStore } from '../store';
 
 const ManagePage = () => {
-  const [links, setLinks] = useStore((state) => [state.links, state.setLinks]);
+  const links = useStore((state) => state.links);
+  const setLinks = useStore((state) => state.setLinks);
 
   useEffect(() => {
     fetchLinks().then((payload) => {

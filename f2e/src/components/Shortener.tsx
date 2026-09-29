@@ -1,16 +1,12 @@
-import { useEffect, useState, KeyboardEvent } from 'react';
+import { useState, KeyboardEvent } from 'react';
 import { createLink, fetchLinks } from '../api';
 
 import { useStore } from '../store';
 
 const Shortener = () => {
   const [orgUrl, setOrgUrl] = useState('');
-  const [clearBtnVisible, setClearBtnVisible] = useState(false);
-  const [setLinks] = useStore((state) => [state.setLinks]);
-
-  useEffect(() => {
-    setClearBtnVisible(orgUrl ? true : false);
-  }, [orgUrl]);
+  const clearBtnVisible = orgUrl !== '';
+  const setLinks = useStore((state) => state.setLinks);
 
   const onClear = () => {
     setOrgUrl('');
@@ -18,7 +14,7 @@ const Shortener = () => {
 
   const onGenerate = () => {
     if (!orgUrl) return;
-    createLink(orgUrl).then((link) => {
+    createLink(orgUrl).then(() => {
       fetchLinks().then((payload) => {
         setLinks(payload);
         setOrgUrl('');

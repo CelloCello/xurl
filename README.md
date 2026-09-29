@@ -7,18 +7,18 @@ An easy URL shortener service.
 ## Tech Stack
 
 #### Frontend
-- react 18.2
-- zustand
-- node.js 14.20.0
-- typescript 4.6.4
-- tailwind 3.1.8
-- vite
+- react 19
+- zustand 5
+- node.js 22
+- typescript 5.9
+- tailwind 4
+- vite 8
 
 #### Backend
 
-- go 1.18
-- gin 1.8.1
-- gorm 1.23.6
+- go 1.26
+- gin 1.12
+- gorm 1.31
 - traefik 2.8
 
 
@@ -28,7 +28,7 @@ An easy URL shortener service.
 
 All action should under `f2e` folder.
 
-Make sure you already under `node.js 14.20.0` and install all dependencies by `npm install`.
+Make sure you already under `node.js 22` and install all dependencies by `npm install`.
 
 And then, you can run it.
 
@@ -40,7 +40,7 @@ Frontend will start in `http://localhost:5173/`
 
 All action should under `apiserver` folder.
 
-Make sure you already under `go 1.18` and install all dependencies by `go mod download`.
+Make sure you already under `go 1.26` and install all dependencies by `go mod download`.
 
     $ go run main.go
 

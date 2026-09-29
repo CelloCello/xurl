@@ -1,4 +1,4 @@
-FROM golang:1.18.6-alpine3.16 AS builder
+FROM golang:1.26-alpine AS builder
 
 COPY ./apiserver/ /app
 
